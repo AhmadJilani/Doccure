@@ -3209,16 +3209,16 @@ th.table-head-days {
 
 .content {
   min-height: 200px;
-  padding: 80px 0 60px;
+  padding: 10px 0 30px;
 }
 @media (max-width: 991.98px) {
   .content {
-    padding: 60px 0 40px;
+    padding: 10px 0 40px;
   }
 }
 @media (max-width: 767.98px) {
   .content {
-    padding: 50px 0 30px;
+    padding: 0px 0 30px;
   }
 }
 
@@ -18107,7 +18107,13 @@ a.mute-video.stop {
   display: inline-block;
   font-size: 16px;
 }
+.card-effect {
+  transition: 0.4s;
+}
 
+.card-effect:hover {
+  transform: translateY(-10px);
+}
 .account-card {
   border-radius: 10px;
   font-size: 16px;
@@ -28440,9 +28446,10 @@ ul.benifits-col li i {
 }
 
 .breadcrumb-bar-two {
-  background: #F2F6F6;
+  /* background: #F2F6F6; */
   background-repeat: no-repeat;
-  padding-top: 24px;
+  padding-top: 30px;
+  margin: 0;
   min-height: 100px;
   position: relative;
   overflow: hidden;
@@ -28450,16 +28457,16 @@ ul.benifits-col li i {
 }
 .breadcrumb-bar-two .inner-banner {
   margin: 0;
-  padding: 70px 0 10px;
+  padding: 75px 0 0;
 }
 .breadcrumb-bar-two .inner-banner .breadcrumb-title {
   font-weight: 600;
-  font-size: 48px;
+  /* font-size: 48px; */
   margin-bottom: 6px;
 }
 @media (max-width: 991.98px) {
   .breadcrumb-bar-two .inner-banner .breadcrumb-title {
-    font-size: 36px;
+    font-size: 26px;
   }
 }
 @media (max-width: 767.98px) {
@@ -28470,18 +28477,19 @@ ul.benifits-col li i {
 @media (max-width: 767.98px) {
   .breadcrumb-bar-two .inner-banner {
     margin: 0;
-    padding: 50px 0;
+    padding: 50px 0 10px;
   }
 }
 @media (max-width: 991.98px) {
   .breadcrumb-bar-two {
-    padding-top: 40px;
-    min-height: 260px;
+    padding-top: 10px;
+    min-height: 100px;
   }
 }
 @media (max-width: 767.98px) {
   .breadcrumb-bar-two {
     min-height: auto;
+    padding-top: 30px;
   }
 }
 .breadcrumb-bar-two .page-breadcrumb ol {

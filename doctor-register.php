@@ -1,7 +1,9 @@
+<?php 
+include 'database.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-
-<!-- Mirrored from doccure.dreamguystech.com/html/template/doctor-register.php by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 28 Sep 2023 20:41:39 GMT -->
 
 <head>
     <meta charset="utf-8">
@@ -39,12 +41,9 @@
 </head>
 
 <body class="account-page">
-
     <div class="main-wrapper">
 
-        <?php include_once 'header2.php'; ?>
-
-
+        <?php include_once 'header1.php'; ?>
 
         <div class="content top-space">
             <div class="container-fluid">
@@ -61,24 +60,89 @@
                                         <h3>Doctor Register <a href="doctor-register.php">Not a Doctor?</a></h3>
                                     </div>
 
-                                    <form
-                                        action="https://doccure.dreamguystech.com/html/template/doctor-register-step1.html">
+                                    <?php
+                                    if (isset($_POST['submit'])) {
+                                    $fullname = $_POST['name'];
+                                    $cellphone = $_POST['cellphone'];
+                                    $email = $_POST['email'];
+                                    $password = $_POST['password'];
+                                    $user_type = $_POST['user_type']; // Capture user type
+                                    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+                                    $errors = array();
+
+                                    // Validation checks
+                                    if (empty($fullname) || empty($cellphone) || empty($email) || empty($password) || empty($user_type)) {
+                                    array_push($errors, "All fields are required");
+                                    }
+                                    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                                    array_push($errors, "Invalid email format");
+                                    }
+                                    if (strlen($password) < 4) { // Corrected password length check
+                                    array_push($errors, "Password must be at least 8 characters");
+                                    }
+
+                                    // Check if the user_type is valid (either 'doctor' or 'patient')
+                                    if ($user_type !== 'doctor' && $user_type !== 'patient') {
+                                    array_push($errors, "Invalid user type selected");
+                                    }
+
+                                    // Display errors or proceed with registration
+                                    echo '<div class="my-3">';
+                                    if (count($errors) > 0) {
+                                    foreach ($errors as $error) {
+                                    echo '<div class="alert alert-danger">' . $error . '</div>';
+                                    }                                
+                                    } else {
+                                    // Insert user into database
+                                    $query = "INSERT INTO register (name, cell, email, password, status, user_type) 
+                                    VALUES ('$fullname', '$cellphone', '$email', '$passwordHash', 'A', '$user_type')";
+
+                                    if (mysqli_query($conn, $query)) {                                    
+                                    echo '<div class="alert alert-success">Registration successful</div>';                                   
+
+                                    // Redirect to login page after successful registration
+                                    echo '<script>
+                                    setTimeout(function() {
+                                    window.location.href = "index.php";
+                                    }, 1000);
+                                    </script>';
+                                    } else {                                    
+                                    echo '<div class="alert alert-danger">Registration failed: ' . mysqli_error($conn) . '</div>';                                    
+                                    }
+                                    }
+                                    echo '</div>';
+                                    }
+                                    ?>
+
+
+                                    <form action="doctor-register.php" method="post">
                                         <div class="mb-3 form-focus">
-                                            <input type="text" class="form-control floating">
+                                            <input name="name" type="text" id="name" class="form-control floating">
                                             <label class="focus-label">Name</label>
                                         </div>
                                         <div class="mb-3 form-focus">
-                                            <input type="text" class="form-control floating">
+                                            <input name="cellphone" type="text" id="cellphone"
+                                                class="form-control floating">
                                             <label class="focus-label">Mobile Number</label>
                                         </div>
                                         <div class="mb-3 form-focus">
-                                            <input type="password" class="form-control floating">
+                                            <input name="email" type="email" id="email" class="form-control floating">
+                                            <label class="focus-label">Email</label>
+                                        </div>
+                                        <div class="mb-3 form-focus">
+                                            <input name="password" type="password" id="password"
+                                                class="form-control floating">
                                             <label class="focus-label">Create Password</label>
                                         </div>
+                                        <label for="user_type">User Type:</label>
+                                        <select name="user_type" required>
+                                            <option value="doctor">Doctor</option>
+                                            <option value="patient">Patient</option>
+                                        </select>
                                         <div class="text-end">
-                                            <a class="forgot-link" href="login.php">Already have an account?</a>
+                                            <a class="forgot-link" href="index.php">Already have an account?</a>
                                         </div>
-                                        <button class="btn btn-primary w-100 btn-lg login-btn"
+                                        <button class="btn btn-primary w-100 btn-lg login-btn" name="submit"
                                             type="submit">Signup</button>
                                         <div class="login-or">
                                             <span class="or-line"></span>
@@ -105,20 +169,13 @@
             </div>
         </div>
 
-
         <?php include_once 'footer.php'; ?>
 
     </div>
-
-
     <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="assets/js/jquery-3.7.0.min.js"></script>
-
     <script src="assets/js/bootstrap.bundle.min.js"></script>
-
     <script src="assets/js/script.js"></script>
 </body>
-
-<!-- Mirrored from doccure.dreamguystech.com/html/template/doctor-register.php by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 28 Sep 2023 20:41:40 GMT -->
 
 </html>

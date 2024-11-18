@@ -24,13 +24,13 @@
                 </div>
                 <ul class="main-nav">                
                     <li class="login-link">
-                        <a href="login.php">Login / Signup</a>
+                        <a href="index.php">Login / Signup</a>
                     </li>
                     <li class="register-btn">
                         <a href="doctor-register.php" class="btn reg-btn"><i class="feather-user"></i>Register</a>
                     </li>
                     <li class="register-btn">
-                        <a href="login.php" class="btn btn-primary log-btn"><i class="feather-lock"></i>Login</a>
+                        <a href="index.php" class="btn btn-primary log-btn"><i class="feather-lock"></i>Login</a>
                     </li>
                 </ul>
             </div>

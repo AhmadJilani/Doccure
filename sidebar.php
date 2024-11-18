@@ -27,6 +27,12 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <span>Dashboard</span>
                     </a>
                 </li>
+                <li class="<?= $current_page == 'accounts.php' ? 'active' : '' ?>">
+                    <a href="accounts.php">
+                        <i class="fas fa-user-cog"></i>
+                        <span>Accounts</span>
+                    </a>
+                </li>
                 <li class="<?= $current_page == 'appointments.php' ? 'active' : '' ?>">
                     <a href="appointments.php">
                         <i class="fas fa-calendar-check"></i>
@@ -45,55 +51,23 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <span>Schedule Timings</span>
                     </a>
                 </li>
-                <li class="<?= $current_page == 'available-timings.html' ? 'active' : '' ?>">
-                    <a href="available-timings.html">
-                        <i class="fas fa-clock"></i>
-                        <span>Available Timings</span>
-                    </a>
-                </li>
+             
                 <li class="<?= $current_page == 'invoices.php' ? 'active' : '' ?>">
                     <a href="invoices.php">
                         <i class="fas fa-file-invoice"></i>
                         <span>Invoices</span>
                     </a>
                 </li>
-                <li class="<?= $current_page == 'accounts.php' ? 'active' : '' ?>">
-                    <a href="accounts.php">
-                        <i class="fas fa-file-invoice-dollar"></i>
-                        <span>Accounts</span>
-                    </a>
-                </li>
-                <li class="<?= $current_page == 'reviews.html' ? 'active' : '' ?>">
-                    <a href="reviews.html">
-                        <i class="fas fa-star"></i>
-                        <span>Reviews</span>
-                    </a>
-                </li>
-                <li class="<?= $current_page == 'chat-doctor.html' ? 'active' : '' ?>">
-                    <a href="chat-doctor.html">
-                        <i class="fas fa-comments"></i>
-                        <span>Message</span>
-                        <small class="unread-msg">23</small>
-                    </a>
-                </li>
+                
+                
+                
                 <li class="<?= $current_page == 'doctor-profile-settings.php' ? 'active' : '' ?>">
                     <a href="doctor-profile-settings.php">
                         <i class="fas fa-user-cog"></i>
                         <span>Profile Settings</span>
                     </a>
                 </li>
-                <li class="<?= $current_page == 'social-media.html' ? 'active' : '' ?>">
-                    <a href="social-media.html">
-                        <i class="fas fa-share-alt"></i>
-                        <span>Social Media</span>
-                    </a>
-                </li>
-                <li class="<?= $current_page == 'doctor-change-password.html' ? 'active' : '' ?>">
-                    <a href="doctor-change-password.html">
-                        <i class="fas fa-lock"></i>
-                        <span>Change Password</span>
-                    </a>
-                </li>
+                
                 <li>
                     <a href="index.php">
                         <i class="fas fa-sign-out-alt"></i>

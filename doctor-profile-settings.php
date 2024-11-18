@@ -52,11 +52,11 @@
 
         <div class="breadcrumb-bar-two">
             <div class="container">
-                <div class="row align-items-center inner-banner">
-                    <div class="col-md-12 col-12 text-center">
-                        <h2 class="breadcrumb-title">Profile Settings</h2>
+                <div class="row inner-banner">
+                    <div class="col-md-12 col-12 p-0 d-flex justify-content-between align-items-center">
+                        <h2 class="breadcrumb-title align-items-start">Profile Settings</h2>
                         <nav aria-label="breadcrumb" class="page-breadcrumb">
-                            <ol class="breadcrumb">
+                            <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
                                 <li class="breadcrumb-item" aria-current="page">Profile Settings</li>
                             </ol>

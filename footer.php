@@ -22,7 +22,7 @@
                                 <h2 class="footer-title">For Patients</h2>
                                 <ul>
                                     <li><a href="search.html">Search for Doctors</a></li>
-                                    <li><a href="login.php">Login</a></li>
+                                    <li><a href="index.php">Login</a></li>
                                     <li><a href="doctor-register.php">Register</a></li>
                                 </ul>
                             </div>
@@ -33,7 +33,7 @@
                                 <ul>
                                     <li><a href="appointments.php">Appointments</a></li>
                                     <li><a href="chat.html">Chat</a></li>
-                                    <li><a href="login.php">Login</a></li>
+                                    <li><a href="index.php">Login</a></li>
                                 </ul>
                             </div>
                         </div>

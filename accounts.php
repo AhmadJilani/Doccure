@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-
 <head>
     <meta charset="utf-8">
     <title>Doccure</title>
@@ -41,19 +39,17 @@
 </head>
 
 <body>
-
     <div class="main-wrapper">
 
         <?php include_once 'header2.php'; ?>
 
-
         <div class="breadcrumb-bar-two">
             <div class="container">
-                <div class="row align-items-center inner-banner">
-                    <div class="col-md-12 col-12 text-center">
-                        <h2 class="breadcrumb-title">Accounts</h2>
+                <div class="row inner-banner">
+                    <div class="col-md-12 col-12 p-0 d-flex justify-content-between align-items-center">
+                        <h2 class="breadcrumb-title align-items-start">Accounts</h2>
                         <nav aria-label="breadcrumb" class="page-breadcrumb">
-                            <ol class="breadcrumb">
+                            <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
                                 <li class="breadcrumb-item" aria-current="page">Accounts</li>
                             </ol>
@@ -72,17 +68,16 @@
                         <?php include_once 'sidebar.php'; ?>
 
                     </div>
+
                     <div class="col-md-7 col-lg-8 col-xl-9">
                         <div class="row">
-                            <div class="col-lg-5 d-flex">
+                            <div class="col-lg-12 d-flex justify-content-between align-items-center">
                                 <div class="card flex-fill">
                                     <div class="card-header">
                                         <div class="row">
-                                            <div class="col-sm-6">
+                                            <div class="col-lg-12 d-flex justify-content-between align-items-center">
                                                 <h3 class="card-title">Account</h3>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div>
+                                                <div class="text-end">
                                                     <a title="Edit Profile" class="btn btn-primary btn-sm"
                                                         href="#account_modal" data-bs-toggle="modal"><i
                                                             class="fas fa-pencil"></i> Edit Details</a>
@@ -90,56 +85,111 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="card-body">
                                         <div class="profile-view-bottom">
                                             <div class="row">
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-3">
                                                     <div class="info-list">
                                                         <div class="title">Bank Name</div>
                                                         <div class="text" id="bank_name">Wells Fargo & Co</div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-3">
                                                     <div class="info-list">
                                                         <div class="title">Branch Name</div>
                                                         <div class="text" id="branch_name">Lenexa</div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-3">
                                                     <div class="info-list">
                                                         <div class="title">Account Number</div>
                                                         <div class="text" id="account_no">5396 5250 1908 3838</div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-3">
                                                     <div class="info-list">
                                                         <div class="title">Account Name</div>
                                                         <div class="text" id="account_name">Dr. Darren Elder</div>
                                                     </div>
                                                 </div>
+                                                <div class="col-lg-12">
+                                                    <div class="info-list">
+                                                        <div class="title">Address</div>
+                                                        <div class="text" id="account_name">Street 216 Foordmore Rd
+                                                            City/Town Kerhonkson State/Province/Region New York
+                                                            Zip/Postal Code 12446 Phone Number (845)626-5641 Country
+                                                            United States Latitude 40.842996 Longitude -73.858228</div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
 
-                            <div class="col-lg-7 d-flex">
+                            <div class="col-lg-12 d-flex">
                                 <div class="card flex-fill">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="account-card bg-success-light">
-                                                    <span>$90.48</span> Earned
+                                            <div class="col-lg-3">
+                                                <div class="card-effect">
+                                                    <div class="account-card bg-success-light">
+                                                        <span>$90.48</span> Earned
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6">
-                                                <div class="account-card bg-warning-light">
-                                                    <span>$0.00</span> Requested
+                                            <div class="col-lg-3">
+                                                <div class="card-effect">
+                                                    <div class="account-card bg-warning-light">
+                                                        <span>$0.00</span> Requested
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6">
-                                                <div class="account-card bg-purple-light">
-                                                    <span>$90.48</span> Balance
+                                            <div class="col-lg-3">
+                                                <div class="card-effect">
+                                                    <div class="account-card bg-purple-light">
+                                                        <span>$90.48</span> Balance
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="card-effect">
+                                                    <div class="account-card bg-danger-light">
+                                                        <span>$90.48</span> Invest
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-3">
+                                                <div class="card-effect">
+                                                    <div class="account-card bg-danger-light">
+                                                        <span>$90.48</span> Earned
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="card-effect">
+                                                    <div class="account-card bg-purple-light">
+                                                        <span>$0.00</span> Requested
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="card-effect">
+                                                    <div class="account-card bg-warning-light">
+                                                        <span>$90.48</span> Balance
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="card-effect">
+                                                    <div class="account-card bg-success-light">
+                                                        <span>$90.48</span> Invest
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 text-center">
@@ -147,6 +197,7 @@
                                                     data-bs-toggle="modal">Payment Request</a>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
