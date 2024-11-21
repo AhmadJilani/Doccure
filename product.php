@@ -1,12 +1,7 @@
 <?php
 include 'database.php';
-
-// Fetch invoices from the database
-
-
-// Fetch invoices from the database
-
-
+?>
+<?php
 if (isset($_POST['ADD'])) {
 	$catid = $_POST['catid'];
 	$subCatId = $_POST['subCatId'];
@@ -22,11 +17,15 @@ if (isset($_POST['ADD'])) {
 	echo '<script>window.location.href="product.php?success=1";</script>';
 	} else {
 	echo '<script>window.location.href="product.php?success=0";</script>';
-
 	}
-
 	// Close the database connection
 	mysqli_close($conn);
+}
+?>
+<?php
+session_start();
+if ($_SESSION["user_id"] == '') {
+    header("Location: index.php");
 }
 ?>
 <!DOCTYPE html>
@@ -72,19 +71,16 @@ if (isset($_POST['ADD'])) {
 <body>
 
     <div class="main-wrapper">
-
         <?php include_once 'header2.php'; ?>
-
-
         <div class="breadcrumb-bar-two">
             <div class="container">
                 <div class="row inner-banner">
                     <div class="col-md-12 col-12 p-0 d-flex justify-content-between align-items-center">
-                        <h2 class="breadcrumb-title align-items-start">Products Ledger</h2>
+                        <h2 class="breadcrumb-title align-items-start">Products</h2>
                         <nav aria-label="breadcrumb" class="page-breadcrumb">
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li class="breadcrumb-item" aria-current="page">Products Ledger</li>
+                                <li class="breadcrumb-item" aria-current="page">Products</li>
                             </ol>
                         </nav>
                     </div>
@@ -96,68 +92,9 @@ if (isset($_POST['ADD'])) {
             <div class="container">
                 <div class="row">
                     <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
-
                         <?php include_once 'sidebar.php'; ?>
-
                     </div>
                     <div class="col-md-7 col-lg-8 col-xl-9">
-
-                        <?php if (isset($_GET['success'])): ?>
-                        <div class="alert alert-<?php echo $_GET['success'] == '1' ? 'success' : 'danger'; ?> alert-dismissible fade show"
-                            role="alert">
-                            <?php echo $_GET['success'] == '1' ? 'Product added successfully!' : 'Error adding product. Please try again.'; ?>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-
-                        <script>
-                        // Clear the URL query parameter after showing the alert
-                        if (window.history.replaceState) {
-                            window.history.replaceState(null, null, window.location.pathname);
-                        }
-                        </script>
-                        <?php endif; ?>
-
-
-                        <?php if ($_GET['suc']==1) {?>
-                        <div class="col-sm-12">
-                            <div class="alert alert-success">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                <strong>SUCCESS!</strong> DEPOSIT REQ SUCESSFULLY SENT !
-                            </div>
-                        </div>
-                        <?php }?>
-                        <?php if ($_GET['error']==4) {?>
-                        <div class="col-sm-12 ">
-                            <div class="alert alert-info">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                <strong>WARNING!</strong> INVALID WALLET ACCOUNT !
-                            </div>
-                        </div><?php }?>
-                        <?php if ($_GET['error']==2) {?>
-                        <div class="col-sm-12 ">
-                            <div class="alert alert-warning">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                <strong>WARNING!</strong> INVALID E-PIN !
-                            </div>
-                        </div><?php }?>
-
-                        <?php if ($_GET['error']==1) {?>
-                        <div class="col-sm-12 ">
-                            <div class="alert alert-danger">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                <strong>WARNING!</strong> INSUFFICIENT FUNDS IN PURCHASE WALLET!
-                            </div>
-                        </div>
-                        <?php }?>
-
-                        <?php if ($_GET['error']==3) {?>
-                        <div class="col-sm-12 ">
-                            <div class="alert alert-danger">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                <strong>WARNING!</strong> INSUFFICIENT FUNDS IN BONUS WALLET!
-                            </div>
-                        </div>
-                        <?php }?>
 
                         <?php if($_GET['addProduct']==1){ ?>
                         <form action="" method="post">
@@ -176,13 +113,13 @@ if (isset($_POST['ADD'])) {
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label class="mb-2">Catagory</label>
+                                                <label class="mb-2">Category</label>
                                                 <select class="form-control" id="catid" name="catid" required>
-                                                    <option value="">Select Catagory</option>
+                                                    <option value="">Select Category</option>
                                                     <?php 
-														$query1 = "SELECT * FROM categories";
-														$result1 = mysqli_query($conn, $query1);
-														while ($row = mysqli_fetch_assoc($result1)) : ?>
+                                                        $query1 = "SELECT * FROM categories";
+                                                        $result1 = mysqli_query($conn, $query1);
+                                                        while ($row = mysqli_fetch_assoc($result1)) : ?>
                                                     <option value="<?php echo $row['id']; ?>">
                                                         <?php echo $row['name']; ?>
                                                     </option>
@@ -193,20 +130,49 @@ if (isset($_POST['ADD'])) {
 
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label class="mb-2">Sub Catagory</label>
+                                                <label class="mb-2">Subcategory</label>
                                                 <select class="form-control" id="subCatId" name="subCatId" required>
-                                                    <option value="">Select Sub Catagory</option>
+                                                    <option value="">Select Subcategory</option>
                                                     <?php 
-														$query1 = "SELECT * FROM sub_categories";
-														$result1 = mysqli_query($conn, $query1);
-														while ($row = mysqli_fetch_assoc($result1)) : ?>
-                                                    <option value="<?php echo $row['id']; ?>">
+                                                        $query2 = "SELECT * FROM sub_categories";
+                                                        $result2 = mysqli_query($conn, $query2);
+                                                        while ($row = mysqli_fetch_assoc($result2)) : ?>
+                                                    <option value="<?php echo $row['id']; ?>"
+                                                        data-category="<?php echo $row['catId']; ?>">
                                                         <?php echo $row['name']; ?>
                                                     </option>
                                                     <?php endwhile; ?>
                                                 </select>
                                             </div>
                                         </div>
+
+                                        <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            const categorySelect = document.getElementById('catid');
+                                            const subCategorySelect = document.getElementById('subCatId');
+
+                                            categorySelect.addEventListener('change', function() {
+                                                const selectedCategory = this.value;
+
+                                                // Reset subcategory options
+                                                Array.from(subCategorySelect.options).forEach(
+                                                    option => {
+                                                        if (option.value === "") {
+                                                            option.style.display =
+                                                                "block"; // Keep the default "Select Subcategory" option
+                                                        } else {
+                                                            // Show only options with matching data-category
+                                                            option.style.display = option
+                                                                .getAttribute('data-category') ===
+                                                                selectedCategory ? "block" : "none";
+                                                        }
+                                                    });
+
+                                                // Reset the subcategory dropdown to the default option
+                                                subCategorySelect.value = "";
+                                            });
+                                        });
+                                        </script>
 
                                         <div class="col-md-6">
                                             <div class="mb-0">
@@ -255,7 +221,7 @@ if (isset($_POST['ADD'])) {
                         <div class="col-md-7 col-lg-8 col-xl-12">
                             <div class="row">
                                 <div class="col-lg-12 d-flex justify-content-between align-items-center">
-                                    <h3 class="card-title">Products Ledger</h3>
+                                    <h3 class="card-title">Products</h3>
                                     <div class="text-end">
                                         <a title="Add Product" class="btn btn-primary btn-sm" data-bs-toggle="modal"><i
                                                 class="fas fa-plus-circle"></i> <a href="product.php?addProduct=1">Add
@@ -272,9 +238,7 @@ if (isset($_POST['ADD'])) {
                                         <table class="table table-hover table-center mb-0">
                                             <thead>
                                                 <tr>
-                                                    <th>Cat ID</th>
-                                                    <th>Sub Cat ID</th>
-                                                    <th>Product ID</th>
+                                                    <th>Serial #</th>
                                                     <th>Product Name</th>
                                                     <th>Product Details</th>
                                                     <th>Amount</th>
@@ -284,21 +248,13 @@ if (isset($_POST['ADD'])) {
                                             </thead>
                                             <tbody>
                                                 <?php 
+                                                $srno = 0;
 													$queryproducts = "SELECT * FROM products";
 													$resultproducts = mysqli_query($conn, $queryproducts);
-													while ($dataproducts = mysqli_fetch_assoc($resultproducts)) : ?>
+													while ($dataproducts = mysqli_fetch_assoc($resultproducts)) : $srno++; ?>
                                                 <tr>
                                                     <td>
-                                                        <a
-                                                            href="invoice-view.php"><?php echo $catid=$dataproducts['catid']; ?></a>
-                                                    </td>
-                                                    <td>
-                                                        <a
-                                                            href="invoice-view.php"><?php echo $subCatId=$dataproducts['subCatId']; ?></a>
-                                                    </td>
-                                                    <td>
-                                                        <a
-                                                            href="invoice-view.php"><?php echo $dataproducts['id']; ?></a>
+                                                        <a href="invoice-view.php"><?php echo $srno; ?></a>
                                                     </td>
                                                     <td>
                                                         <h2 class="table-avatar">
@@ -319,11 +275,10 @@ if (isset($_POST['ADD'])) {
                                                     <td><?php echo $dataproducts['date']; ?></td>
                                                     <td>
                                                         <div class="table-action">
-                                                            <a href="invoice-view.php" class="btn btn-sm bg-info-light">
+                                                            <a href="sale-report.php?pid=<?php echo $dataproducts['id']; ?>"
+                                                                target="_blank" class="btn btn-sm bg-info-light">
                                                                 <i class="far fa-eye"></i> View
                                                             </a>
-
-
                                                         </div>
 
 
@@ -340,20 +295,9 @@ if (isset($_POST['ADD'])) {
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
-
-
-
-
-
-
-
-
-
     </div>
 
     <?php include_once 'footer.php'; ?>

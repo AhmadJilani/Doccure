@@ -20,8 +20,12 @@ if (isset($_POST['ADD'])) {
 }
 ?>
 
-
-
+<?php
+session_start();
+if ($_SESSION["user_id"] == '') {
+    header("Location: index.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -73,11 +77,11 @@ if (isset($_POST['ADD'])) {
             <div class="container">
                 <div class="row inner-banner">
                     <div class="col-md-12 col-12 p-0 d-flex justify-content-between align-items-center">
-                        <h2 class="breadcrumb-title align-items-start">Products Ledger</h2>
+                        <h2 class="breadcrumb-title align-items-start">Products Catagory</h2>
                         <nav aria-label="breadcrumb" class="page-breadcrumb">
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li class="breadcrumb-item" aria-current="page">Products Ledger</li>
+                                <li class="breadcrumb-item" aria-current="page">Products Catagory</li>
                             </ol>
                         </nav>
                     </div>
@@ -89,87 +93,10 @@ if (isset($_POST['ADD'])) {
             <div class="container">
                 <div class="row">
                     <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
-
                         <?php include_once 'sidebar.php'; ?>
-
                     </div>
                     <div class="col-md-7 col-lg-8 col-xl-9">
-                        <?php
-//if (isset($_GET['success']) && $_GET['success'] == 1) {
-//echo '<div class="alert alert-success">Product added successfully.</div>';
-//// Redirect to login page after successful registration
-//echo '<script>
-//setTimeout(function() {
-//window.location.href = "products-ledger.php";
-//}, 1000);
-//</script>';
-//}else{
-//
-//}
-?>
-
-                        <?php
-							if (isset($_GET['success']) && $_GET['success'] == 1) {
-							echo '<div class="alert alert-success">Product added successfully.</div>';
-							// Redirect to login page after successful registration
-							}else{
-
-							}
-								
-							if (isset($_GET['error']) && $_GET['error'] == 1) {
-							echo '<div class="alert alert-danger">Product added successfully.</div>';
-							// Redirect to login page after successful registration
-							}else{
-
-							}
-							?>
-
-
-                        <?php if ($_GET['suc']==1) {?>
-                        <div class="col-sm-12">
-                            <div class="alert alert-success">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                <strong>SUCCESS!</strong> DEPOSIT REQ SUCESSFULLY SENT !
-                            </div>
-                        </div>
-                        <?php }?>
-                        <?php if ($_GET['error']==4) {?>
-                        <div class="col-sm-12 ">
-                            <div class="alert alert-info">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                <strong>WARNING!</strong> INVALID WALLET ACCOUNT !
-                            </div>
-                        </div><?php }?>
-                        <?php if ($_GET['error']==2) {?>
-                        <div class="col-sm-12 ">
-                            <div class="alert alert-warning">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                <strong>WARNING!</strong> INVALID E-PIN !
-                            </div>
-                        </div><?php }?>
-
-                        <?php if ($_GET['error']==1) {?>
-                        <div class="col-sm-12 ">
-                            <div class="alert alert-danger">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                <strong>WARNING!</strong> INSUFFICIENT FUNDS IN PURCHASE WALLET!
-                            </div>
-                        </div>
-                        <?php }?>
-
-                        <?php if ($_GET['error']==3) {?>
-                        <div class="col-sm-12 ">
-                            <div class="alert alert-danger">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                <strong>WARNING!</strong> INSUFFICIENT FUNDS IN BONUS WALLET!
-                            </div>
-                        </div>
-                        <?php }?>
                         <?php if($_GET['add']==1){ ?>
-
-
-
-
                         <form action="" method="post">
                             <div class="card">
                                 <div class="card-body">
@@ -184,18 +111,12 @@ if (isset($_POST['ADD'])) {
                                         </div>
                                     </div>
                                     <div class="row">
-
                                         <div class="col-md-6">
                                             <div class="mb-0">
                                                 <label for="date" class="mb-2">Catagory Name:</label>
                                                 <input type="text" name="category_name" class="form-control fw-bold">
                                             </div>
                                         </div>
-
-
-
-
-
 
                                         <div class="mt-2 submit-section submit-btn-bottom">
                                             <button type="submit" name="ADD" class="btn btn-primary prime-btn">Save
@@ -205,8 +126,6 @@ if (isset($_POST['ADD'])) {
                                 </div>
                             </div>
                         </form>
-
-
                         <?php }	?>
 
                         <div class="col-md-7 col-lg-8 col-xl-12">
@@ -229,31 +148,56 @@ if (isset($_POST['ADD'])) {
                                         <table class="table table-hover table-center mb-0">
                                             <thead>
                                                 <tr>
-                                                    <th>Cat ID</th>
-                                                    <th>Name</th>
+                                                    <th>SR No.</th>
+                                                    <th>Cat Name</th>
+                                                    <th>Sub Cat</th>
+                                                    <th>Products</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php 
+                                                    $sr = 0;
 													$queryproducts = "SELECT * FROM categories";
 													$resultproducts = mysqli_query($conn, $queryproducts);
-													while ($dataproducts = mysqli_fetch_assoc($resultproducts)) : ?>
+													while ($dataproducts = mysqli_fetch_assoc($resultproducts)) : 
+                                                    $sr++;
+                                                    ?>
                                                 <tr>
                                                     <td>
-                                                        <a
-                                                            href="invoice-view.php"><?php echo $catid=$dataproducts['id']; ?></a>
+                                                        <?php echo $sr; ?>
                                                     </td>
                                                     <td>
                                                         <h2 class="table-avatar">
-                                                            <a href="patient-profile.php" class="avatar avatar-sm me-2">
+                                                            <a class="avatar avatar-sm me-2">
                                                                 <img class="avatar-img rounded-circle"
                                                                     src="assets/img/patients/patient.jpg"
                                                                     alt="User Image">
                                                             </a>
-                                                            <a href="patient-profile.php"><?php echo $dataproducts['name']; ?>
-                                                                <span><?php echo $dataproducts['id']; ?></span></a>
+                                                            <a><?php echo $dataproducts['name']; ?>
+                                                                <span><strong>Id: </strong><?php echo $catId=$dataproducts['id']; ?></span></a>
                                                         </h2>
+                                                    </td>
+                                                    
+                                                    <td>
+                                                        <?php
+                                                            // SQL query to count products for the given category ID
+                                                            $query_count = "SELECT COUNT(*) AS subCat_count FROM sub_categories WHERE catId='$catId'";
+                                                            $result_count = mysqli_query($conn, $query_count);
+                                                            $count_data = mysqli_fetch_assoc($result_count); // Fetch the result as an associative array
+                                                            $subCat_count = $count_data['subCat_count'];   // Extract the count from the result
+                                                            ?>
+                                                        Total Sub Cat: <strong><?php echo $subCat_count; ?></strong>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                            // SQL query to count products for the given category ID
+                                                            $query_count = "SELECT COUNT(*) AS product_count FROM products WHERE catId='$catId'";
+                                                            $result_count = mysqli_query($conn, $query_count);
+                                                            $count_data = mysqli_fetch_assoc($result_count); // Fetch the result as an associative array
+                                                            $product_count = $count_data['product_count'];   // Extract the count from the result
+                                                            ?>
+                                                        Total Products: <strong><?php echo $product_count; ?></strong>
                                                     </td>
 
                                                     <td>

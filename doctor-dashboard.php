@@ -1,4 +1,10 @@
 
+<?php
+session_start();
+if ($_SESSION["user_id"] == '') {
+    header("Location: index.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 

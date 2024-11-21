@@ -1,5 +1,4 @@
 <?php
-// Get the current page's URL path
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
 
@@ -86,8 +85,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <li class="register-btn">
             <a href="doctor-register.php" class="btn reg-btn"><i class="feather-user"></i>Register</a>
         </li>
-        <li class="register-btn">
-            <a href="index.php?action=logout" class="btn btn-primary log-btn"><i class="feather-lock"></i>Logout</a>            
+        <li class="register-btn">            
+            <a href="logout.php" class="btn btn-primary log-btn"><i class="feather-lock"></i>Logout</a>                        
         </li>
     </ul>
 </div>

@@ -2,9 +2,10 @@
 include 'database.php';
 
 if (isset($_POST['ADD'])) {
+    $Cat = $_POST['catid'];
     $subCat = $_POST['subCat'];
 
-    $query = "INSERT INTO sub_categories SET name = '$subCat'";
+    $query = "INSERT INTO sub_categories SET  catId = '$Cat', name = '$subCat'";
     if (mysqli_query($conn, $query)) {
         echo '<script>window.location.href="subcatagorty.php?success=1";</script>';
     } else {
@@ -15,6 +16,12 @@ if (isset($_POST['ADD'])) {
 }
 ?>
 
+<?php
+session_start();
+if ($_SESSION["user_id"] == '') {
+    header("Location: index.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -87,77 +94,6 @@ if (isset($_POST['ADD'])) {
 
                     </div>
                     <div class="col-md-7 col-lg-8 col-xl-9">
-                        <?php
-                            //if (isset($_GET['success']) && $_GET['success'] == 1) {
-                            //echo '<div class="alert alert-success">Product added successfully.</div>';
-                            //// Redirect to login page after successful registration
-                            //echo '<script>
-                            //setTimeout(function() {
-                            //window.location.href = "products-ledger.php";
-                            //}, 1000);
-                            //</script>';
-                            //}else{
-                            //
-                            //}
-                            ?>
-
-                        <?php
-							if (isset($_GET['success']) && $_GET['success'] == 1) {
-							echo '<div class="alert alert-success">Product added successfully.</div>';
-							// Redirect to login page after successful registration
-							}else{
-
-							}
-								
-							if (isset($_GET['error']) && $_GET['error'] == 1) {
-							echo '<div class="alert alert-danger">Product added successfully.</div>';
-							// Redirect to login page after successful registration
-							}else{
-
-							}
-							?>
-
-
-                        <?php if ($_GET['suc']==1) {?>
-                        <div class="col-sm-12">
-                            <div class="alert alert-success">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                <strong>SUCCESS!</strong> DEPOSIT REQ SUCESSFULLY SENT !
-                            </div>
-                        </div>
-                        <?php }?>
-                        <?php if ($_GET['error']==4) {?>
-                        <div class="col-sm-12 ">
-                            <div class="alert alert-info">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                <strong>WARNING!</strong> INVALID WALLET ACCOUNT !
-                            </div>
-                        </div><?php }?>
-                        <?php if ($_GET['error']==2) {?>
-                        <div class="col-sm-12 ">
-                            <div class="alert alert-warning">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                <strong>WARNING!</strong> INVALID E-PIN !
-                            </div>
-                        </div><?php }?>
-
-                        <?php if ($_GET['error']==1) {?>
-                        <div class="col-sm-12 ">
-                            <div class="alert alert-danger">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                <strong>WARNING!</strong> INSUFFICIENT FUNDS IN PURCHASE WALLET!
-                            </div>
-                        </div>
-                        <?php }?>
-
-                        <?php if ($_GET['error']==3) {?>
-                        <div class="col-sm-12 ">
-                            <div class="alert alert-danger">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                <strong>WARNING!</strong> INSUFFICIENT FUNDS IN BONUS WALLET!
-                            </div>
-                        </div>
-                        <?php }?>
 
 
                         <?php if($_GET['add']==1){ ?>
@@ -175,6 +111,23 @@ if (isset($_POST['ADD'])) {
                                         </div>
                                     </div>
                                     <div class="row">
+
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="mb-2">Catagory</label>
+                                                <select class="form-control" id="catid" name="catid" required>
+                                                    <option value="">Select Catagory</option>
+                                                    <?php 
+														$query1 = "SELECT * FROM categories";
+														$result1 = mysqli_query($conn, $query1);
+														while ($row = mysqli_fetch_assoc($result1)) : ?>
+                                                    <option value="<?php echo $row['id']; ?>">
+                                                        <?php echo $row['name']; ?>
+                                                    </option>
+                                                    <?php endwhile; ?>
+                                                </select>
+                                            </div>
+                                        </div>
 
                                         <div class="col-md-6">
                                             <div class="mb-0">
@@ -213,56 +166,45 @@ if (isset($_POST['ADD'])) {
                                         <table class="table table-hover table-center mb-0">
                                             <thead>
                                                 <tr>
-                                                    <th>Cat ID</th>
+                                                    <th>SR NO.</th>
                                                     <th>Cat Name</th>
-                                                    <th>Name</th>
-                                                    <th>Sub Cat ID</th>
-                                                    <th>Action</th>
+                                                    <th>Sub Cat Name</th>
+                                                    <th>DOC</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php 
+                                                    $sr =0;
 													$queryproducts = "SELECT * FROM sub_categories";
 													$resultproducts = mysqli_query($conn, $queryproducts);
-													while ($dataproducts = mysqli_fetch_assoc($resultproducts)) : ?>
-                                                <tr>
-                                                    <?php 
-                                                    $queryproducts = "SELECT * FROM categories";
-                                                    $resultproducts = mysqli_query($conn, $queryproducts);
-                                                    while ($dataproducts1 = mysqli_fetch_assoc($resultproducts)) :                                                    
+													while ($dataproducts = mysqli_fetch_assoc($resultproducts)) : 
+                                                        $sr++;
                                                     ?>
+                                                <tr>
                                                     <td>
-                                                        <a href="invoice-view.php"><?php echo $dataproducts1['id']; ?></a>
+                                                        <?php echo $sr; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php $catid=$dataproducts['catId']; ?>
+                                                        <?php
+                                                        $querycat = "select * from categories where id=$catid";
+                                                        $resultcat = mysqli_query($conn, $querycat);
+                                                        $datacat = mysqli_fetch_assoc($resultcat);
+                                                        echo $datacat['name'];
+                                                        ?>
                                                     </td>
                                                     <td>
                                                         <h2 class="table-avatar">
-                                                            <a href="patient-profile.php"><?php echo $dataproducts1['name']; ?></a>
-                                                        </h2>
-                                                    </td>
-
-                                                    <?php endwhile; ?>
-                                                    <td>
-                                                        <h2 class="table-avatar">
-                                                            <a href="patient-profile.php" class="avatar avatar-sm me-2">
+                                                            <a href="" class="avatar avatar-sm me-2">
                                                                 <img class="avatar-img rounded-circle"
-                                                                src="assets/img/patients/patient.jpg"
-                                                                alt="User Image">
+                                                                    src="assets/img/patients/patient.jpg"
+                                                                    alt="User Image">
                                                             </a>
-                                                            <a href="patient-profile.php"><?php echo $dataproducts['name']; ?>
-                                                            <span><?php echo $dataproducts['id']; ?></span></a>
+                                                            <?php echo $dataproducts['name']; ?>
                                                         </h2>
                                                     </td>
                                                     <td>
-                                                        <a
-                                                            href="invoice-view.php"><?php echo $dataproducts['id']; ?></a>
-                                                    </td>
-
-                                                    <td>
-                                                        <div class="table-action">
-                                                            <a href="invoice-view.php" class="btn btn-sm bg-info-light">
-                                                                <i class="far fa-eye"></i> View
-                                                            </a>
-                                                        </div>
+                                                        <?php echo $dataproducts['doc']; ?></a>
                                                     </td>
                                                 </tr>
                                                 <?php endwhile; ?>

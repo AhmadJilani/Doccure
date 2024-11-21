@@ -25,6 +25,12 @@ if (mysqli_query($conn, $query)) {
 mysqli_close($conn);
 }
 ?>
+<?php
+session_start();
+if ($_SESSION["user_id"] == '') {
+    header("Location: index.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
