@@ -23,6 +23,8 @@ if (isset($_POST['login'])) {
                 // Successful login, start the session and redirect to the dashboard
                 $_SESSION['user_id'] = $user['id']; // Store user ID in session
                 $_SESSION['email'] = $user['email'];
+                $_SESSION['name'] = $user['name'];  
+
                 
 
                 // Insert user into login table

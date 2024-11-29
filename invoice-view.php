@@ -79,10 +79,10 @@ if($_GET['inv']){
             $balance=$rd_members->balance;
             ?>
 
-        <div class="content">
+        <div class="content p-0">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-8 offset-lg-2">
+                    <div class="col-lg-10 offset-lg-1">
                         <div class="invoice-content">
                             <div class="invoice-item">
                                 <div class="row">
@@ -155,9 +155,10 @@ if($_GET['inv']){
                                             <table class="invoice-table table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th>Description</th>
-                                                        <th class="text-center">Price</th>
-                                                        <th class="text-center">Qty</th>
+                                                        <th>Product</th>
+                                                        <th>P.Details</th>
+                                                        <th class="text-center">P.Price</th>
+                                                        <th class="text-center">P.Qty</th>
                                                         <th class="text-center">Total Amount</th>
                                                         <th class="text-center">Discount</th>
                                                         <th class="text-end">Net Amount</th>
@@ -183,10 +184,12 @@ if($_GET['inv']){
                                                                 $query_members = mysqli_query($conn, $query_members);
                                                                 $rd_members = mysqli_fetch_object($query_members);
                                                                 echo $Cusname = $rd_members->name;
+                                                                $productname = $rd_members->details;
                                                                 ?>
                                                             <br />
                                                             #<?php echo $dataproducts['product_id']; ?>
                                                         </td>
+                                                        <td class="text-center"><?php echo $productname; ?>
                                                         <td class="text-center"><?php echo $dataproducts['price']; ?>
                                                         </td>
                                                         <td class="text-center"><?php echo $dataproducts['qty']; ?></td>
@@ -249,10 +252,9 @@ if($_GET['inv']){
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <?php include_once 'footer.php'; ?>
+                </div>                
             </div>
+            <?php include_once 'footer.php'; ?>
 
 
             <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js">

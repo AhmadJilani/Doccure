@@ -27,21 +27,21 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </a>
     </div>
     <ul class="main-nav">        
-        <li class="has-submenu <?php echo in_array($current_page, [ 'purchases.php','catagorty.php','subcatagorty.php', 'product.php', 'customers.php', 'sales.php', 'chat-doctor.html', 'invoices.php', 'doctor-profile-settings.php', 'reviews.html', 'doctor-register.php']) ? 'active' : ''; ?>">
+        <li class="has-submenu <?php echo in_array($current_page, [ 'purchases.php','catagorty.php','subcatagorty.php', 'product.php', 'customers.php', 'purchase.php', 'sales.php', 'edit-prescription.php','invoices.php', 'doctor-profile-settings.php', 'doctor-register.php']) ? 'active' : ''; ?>">
             <a href="javascript:void(0);">Accounts <i class="fas fa-chevron-down"></i></a>
             <ul class="submenu">                
                 <li><a href="customers.php" class="<?php echo $current_page === 'customers.php' ? 'active' : ''; ?>">Customers</a></li>
-                <li><a href="purchases.php" class="<?php echo $current_page === 'purchases.php' ? 'active' : ''; ?>">Purchases</a></li>
+                <!-- <li><a href="purchases.php" class="<?php echo $current_page === 'purchases.php' ? 'active' : ''; ?>">Purchases</a></li> -->
                 <li><a href="catagorty.php" class="<?php echo $current_page === 'catagorty.php' ? 'active' : ''; ?>">Catagorty</a></li>
                 <li><a href="subcatagorty.php" class="<?php echo $current_page === 'subcatagorty.php' ? 'active' : ''; ?>">Sub Catagorty</a></li>
                 <li><a href="product.php" class="<?php echo $current_page === 'product.php' ? 'active' : ''; ?>">Products</a></li>
+                <li><a href="purchase.php" class="<?php echo $current_page === 'purchase.php' ? 'active' : ''; ?>">Purchase</a></li>
                 <li><a href="sales.php" class="<?php echo $current_page === 'sales.php' ? 'active' : ''; ?>">Sales</a></li>
-                <!-- <li><a href="products-ledger.php" class="<?php echo $current_page === 'products-ledger.php' ? 'active' : ''; ?>">Products Ledger</a></li> -->
-                <li><a href="chat-doctor.html" class="<?php echo $current_page === 'chat-doctor.html' ? 'active' : ''; ?>">Chat</a></li>
+                <li><a href="edit-prescription.php" class="<?php echo $current_page === 'edit-prescription.php' ? 'active' : ''; ?>">Edit prescription</a></li>
+                <!-- <li><a href="products-ledger.php" class="<?php echo $current_page === 'products-ledger.php' ? 'active' : ''; ?>">Products Ledger</a></li> -->                
                 <li><a href="invoices.php" class="<?php echo $current_page === 'invoices.php' ? 'active' : ''; ?>">Invoices</a></li>
-                <li><a href="doctor-profile-settings.php" class="<?php echo $current_page === 'doctor-profile-settings.php' ? 'active' : ''; ?>">Profile Settings</a></li>
-                <li><a href="reviews.html" class="<?php echo $current_page === 'reviews.html' ? 'active' : ''; ?>">Reviews</a></li>
-                <li><a href="doctor-register.php" class="<?php echo $current_page === 'doctor-register.php' ? 'active' : ''; ?>">Doctor Register</a></li>
+                <li><a href="doctor-profile-settings.php" class="<?php echo $current_page === 'doctor-profile-settings.php' ? 'active' : ''; ?>">Profile Settings</a></li>                
+                <li><a href="doctor-register.php" class="<?php echo $current_page === 'doctor-register.php' ? 'active' : ''; ?>">Register</a></li>
             </ul>
         </li>
         <li class="has-submenu <?php echo in_array($current_page, ['appointments.php', 'schedule-timings.php', 'my-patients.php', 'patient-profile.php', 'chat-doctor.html', 'invoices.php', 'doctor-profile-settings.php', 'reviews.html', 'doctor-register.php']) ? 'active' : ''; ?>">
@@ -50,8 +50,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <li><a href="appointments.php" class="<?php echo $current_page === 'appointments.php' ? 'active' : ''; ?>">Appointments</a></li>
                 <li><a href="schedule-timings.php" class="<?php echo $current_page === 'schedule-timings.php' ? 'active' : ''; ?>">Schedule Timing</a></li>
                 <li><a href="my-patients.php" class="<?php echo $current_page === 'my-patients.php' ? 'active' : ''; ?>">Patients List</a></li>
-                <li><a href="patient-profile.php" class="<?php echo $current_page === 'patient-profile.php' ? 'active' : ''; ?>">Patients Profile</a></li>
-                <li><a href="chat-doctor.html" class="<?php echo $current_page === 'chat-doctor.html' ? 'active' : ''; ?>">Chat</a></li>
+                <li><a href="patient-profile.php" class="<?php echo $current_page === 'patient-profile.php' ? 'active' : ''; ?>">Patients Profile</a></li>                
                 <li><a href="invoices.php" class="<?php echo $current_page === 'invoices.php' ? 'active' : ''; ?>">Invoices</a></li>
                 <li><a href="doctor-profile-settings.php" class="<?php echo $current_page === 'doctor-profile-settings.php' ? 'active' : ''; ?>">Profile Settings</a></li>
                 <li><a href="reviews.html" class="<?php echo $current_page === 'reviews.html' ? 'active' : ''; ?>">Reviews</a></li>

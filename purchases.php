@@ -118,7 +118,7 @@ if ($_SESSION["user_id"] == '') {
 
                     }
                     ?>
-                        <?php if($_GET['addSales']==1){ ?>
+                        <?php if($_GET['addPurchase']==1){ ?>
                         <form action="" method="post">
                             <div class="card">
                                 <div class="card-body">
@@ -192,7 +192,7 @@ if ($_SESSION["user_id"] == '') {
                                     <h3 class="card-title">Sales</h3>
                                     <div class="text-end">
                                         <a title="Add Sales" class="btn btn-primary btn-sm" data-bs-toggle="modal"><i
-                                                class="fas fa-plus-circle"></i> <a href="sales.php?addSales=1">Add
+                                                class="fas fa-plus-circle"></i> <a href="purchases.php?addPurchase=1">Add
                                                 Sales</a>
                                     </div>
                                 </div>

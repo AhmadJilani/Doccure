@@ -1,4 +1,5 @@
 <?php
+include 'database.php';
 // Get the current file name
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
@@ -10,14 +11,14 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <img src="assets/img/doctors/doctor-thumb-02.jpg" alt="User Image">
             </a>
             <div class="profile-det-info">
-                <h3>Dr. Ahmad Jilani</h3>
+                <h3>Dr. <?php echo $data_members->name;?>(<?php echo $data_members->id;?>)</h3>
                 <div class="patient-details">
-                    <h5 class="mb-0">BDS, MDS - Oral & Maxillofacial Surgery</h5>
+                    <h5 class="mb-0"><?php echo $data_members->email;?></h5>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div class="dashboard-widget">
         <nav class="dashboard-menu">
             <ul>
@@ -51,23 +52,23 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <span>Schedule Timings</span>
                     </a>
                 </li>
-             
+
                 <li class="<?= $current_page == 'invoices.php' ? 'active' : '' ?>">
                     <a href="invoices.php">
                         <i class="fas fa-file-invoice"></i>
                         <span>Invoices</span>
                     </a>
                 </li>
-                
-                
-                
+
+
+
                 <li class="<?= $current_page == 'doctor-profile-settings.php' ? 'active' : '' ?>">
                     <a href="doctor-profile-settings.php">
                         <i class="fas fa-user-cog"></i>
                         <span>Profile Settings</span>
                     </a>
                 </li>
-                
+
                 <li>
                     <a href="index.php">
                         <i class="fas fa-sign-out-alt"></i>

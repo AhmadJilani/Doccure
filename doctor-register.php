@@ -63,7 +63,7 @@ if ($_SESSION["user_id"] == '') {
                                 </div>
                                 <div class="col-md-12 col-lg-6 login-right">
                                     <div class="login-header">
-                                        <h3>Doctor Register <a href="doctor-register.php">Not a Doctor?</a></h3>
+                                        <h3>Register</h3>
                                     </div>
 
                                     <?php

@@ -148,11 +148,11 @@ if ($_SESSION["user_id"] == '') {
                                         <table class="table table-hover table-center mb-0">
                                             <thead>
                                                 <tr>
-                                                    <th>SR No.</th>
-                                                    <th>Cat Name</th>
-                                                    <th>Sub Cat</th>
-                                                    <th>Products</th>
-                                                    <th>Action</th>
+                                                    <th>SR No.</th>                                                    
+                                                    <th>Sub-Cat Name</th>
+                                                    <th>Sub Cats Against Cat</th>
+                                                    <th>Products Against Cat</th>
+                                                    <!-- <th>Action</th> -->
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -177,7 +177,7 @@ if ($_SESSION["user_id"] == '') {
                                                             <a><?php echo $dataproducts['name']; ?>
                                                                 <span><strong>Id: </strong><?php echo $catId=$dataproducts['id']; ?></span></a>
                                                         </h2>
-                                                    </td>
+                                                    </td>                                                  
                                                     
                                                     <td>
                                                         <?php
@@ -187,7 +187,7 @@ if ($_SESSION["user_id"] == '') {
                                                             $count_data = mysqli_fetch_assoc($result_count); // Fetch the result as an associative array
                                                             $subCat_count = $count_data['subCat_count'];   // Extract the count from the result
                                                             ?>
-                                                        Total Sub Cat: <strong><?php echo $subCat_count; ?></strong>
+                                                        Total Sub Cat: (<strong><?php echo $subCat_count; ?></strong>)
                                                     </td>
                                                     <td>
                                                         <?php
@@ -197,16 +197,9 @@ if ($_SESSION["user_id"] == '') {
                                                             $count_data = mysqli_fetch_assoc($result_count); // Fetch the result as an associative array
                                                             $product_count = $count_data['product_count'];   // Extract the count from the result
                                                             ?>
-                                                        Total Products: <strong><?php echo $product_count; ?></strong>
+                                                        Total Products: (<strong><?php echo $product_count; ?></strong>)
                                                     </td>
-
-                                                    <td>
-                                                        <div class="table-action">
-                                                            <a href="invoice-view.php" class="btn btn-sm bg-info-light">
-                                                                <i class="far fa-eye"></i> View
-                                                            </a>
-                                                        </div>
-                                                    </td>
+                                                    
                                                 </tr>
                                                 <?php endwhile; ?>
                                             </tbody>

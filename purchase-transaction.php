@@ -18,25 +18,25 @@ $remarks = $_POST['remarks'];
 $pay_type= $_POST['pay_type'];
 // Insert the form data into the sales table                            
 
-$query = "SELECT SUM(netAmount) FROM cart";
+$query = "SELECT SUM(netAmount) FROM cartpurchase";
 $result = mysqli_query($conn, $query) or die(mysqli_error()); 
 while ($row = mysqli_fetch_array($result)) {
 $nettotal = $row['SUM(netAmount)'];
 }
 
 if($pay_type=="CASH"){
-$querysales = "INSERT INTO sales SET type = 'SI', date = '$date', cstId = '$cstId', cst_name = '$customerName', invNum = '$invNum', details = '$remarks', pay_type = '$pay_type', amount = '$nettotal', paid = '$nettotal' , balance = '0', ip='$ip', userid='$_SESSION[user_id]'";
-mysqli_query($conn, $querysales);
+$querypurchase = "INSERT INTO purchase SET type = 'PI', date = '$date', cstId = '$cstId', cst_name = '$customerName', invNum = '$invNum', details = '$remarks', pay_type = '$pay_type', amount = '$nettotal', paid = '$nettotal' , balance = '0', ip='$ip' ";
+mysqli_query($conn, $querypurchase);
 }
 
 if($pay_type=="COD"){
-$querysales = "INSERT INTO sales SET type = 'SI', date = '$date', cstId = '$cstId', cst_name = '$customerName', invNum = '$invNum', details = '$remarks', pay_type = '$pay_type', amount = '$nettotal', paid = '0' , balance = '$nettotal', ip='$ip', userid='$_SESSION[user_id]'";
-mysqli_query($conn, $querysales);
+$querypurchase = "INSERT INTO purchase SET type = 'PI', date = '$date', cstId = '$cstId', cst_name = '$customerName', invNum = '$invNum', details = '$remarks', pay_type = '$pay_type', amount = '$nettotal', paid = '0' , balance = '$nettotal', ip='$ip' ";
+mysqli_query($conn, $querypurchase);
 }
     
-$querycart = "SELECT * FROM cart where ip='$ip' ";
+$querycart = "SELECT * FROM cartpurchase where ip='$ip' ";
 $resultproducts = mysqli_query($conn, $querycart);
-while ($dataproducts = mysqli_fetch_assoc($resultproducts)):
+while ($dataproducts = mysqli_fetch_assoc($resultproducts)) :
 
 $product_id=$dataproducts['product_id'];
 $quantity=$dataproducts['quantity'];
@@ -45,58 +45,50 @@ $totalAmount=$dataproducts['totalAmount'];
 $discount=$dataproducts['discount'];
 $netAmount=$dataproducts['netAmount'];
 
-// $query_members = "SELECT * FROM products WHERE id = '$product_id'";
-// $result_members = mysqli_query($conn, $query_members);
-// $data_members = mysqli_fetch_object($result_members);
-// $stock=$data_members->stock;
-// $quantityOut =  $stock - $quantity;
 
-// $queryproduct = "update products SET  stock = '$quantityOut' where id = '$product_id'";
-// mysqli_query($conn, $queryproduct);
+$query_members = "SELECT * FROM products WHERE id = '$product_id'";
+$result_members = mysqli_query($conn, $query_members);
+$data_members = mysqli_fetch_object($result_members);
+$stock=$data_members->stock;
+$quantityIn =  $quantity + $stock;
 
-$queryx = "INSERT INTO products_ledger SET type = 'SI', date = '$date', cstId = '$cstId', cst_name = '$customerName', invNum = '$invNum', product_id = '$product_id', price = '$price', qty = '$quantity', qOut = '$quantity', totalAmnt = '$totalAmount' , discount = '$discount', netAmount = '$netAmount' ";
+$queryproduct = "update products SET  stock = '$quantityIn' where id = '$product_id'";
+mysqli_query($conn, $queryproduct);
+
+$queryx = "INSERT INTO products_ledger  SET type = 'PI', date = '$date', cstId = '$cstId', invNum = '$invNum', product_id = '$product_id', price = '$price', qty = '$quantity', qIn = '$quantity', totalAmnt = '$totalAmount' , discount = '$discount', netAmount = '$netAmount' ";
 mysqli_query($conn, $queryx);
  endwhile; 
 
 //empty cart
-$querycartdel = "delete from cart where ip='$ip'";
+$querycartdel = "delete from cartpurchase where ip='$ip'";
 mysqli_query($conn, $querycartdel);
 
 // Execute the query and check for success
 if (mysqli_query($conn, $query)) {
-    echo '<script>window.location.href="sales.php?success=1";</script>';
+    echo '<script>window.location.href="purchase.php?success=1";</script>';
 } else {
-    echo '<script>window.location.href="sales.php?success=0";</script>';
+    echo '<script>window.location.href="purchase.php?success=0";</script>';
 }
 
 // Close the database connection
 mysqli_close($conn);
 }
 
-   // Handle delete request
+// Handle delete request
 if (isset($_GET['delete_id'])) {
     $deleteId = $_GET['delete_id'];
-    $cartQuery = "SELECT * FROM cart WHERE cart_id = '$deleteId'";
-    $cartResult = mysqli_query($conn, $cartQuery);
-    if ($cartResult && mysqli_num_rows($cartResult) > 0) {
-        $cartData = mysqli_fetch_object($cartResult);
-        $productId = $cartData->product_id;
-        $quantity = $cartData->quantity;
 
-        $productQuery = "SELECT stock FROM products WHERE id = '$productId'";
-        $productResult = mysqli_query($conn, $productQuery);
-        if ($productResult && mysqli_num_rows($productResult) > 0) {
-            $productData = mysqli_fetch_object($productResult);
-            $stock = $productData->stock;
-            $newStock = $stock + $quantity;
-            mysqli_query($conn, "UPDATE products SET stock = '$newStock' WHERE id = '$productId'");
-        }
+    // Delete the item from the cart table
+    $deleteQuery = "DELETE FROM cartpurchase WHERE cart_id = '$deleteId'";
+    if (mysqli_query($conn, $deleteQuery)) {
+        echo '<script>window.location.href="purchase-transaction.php?deleted=1";</script>';
+    } else {
+        echo '<script>window.location.href="purchase-transaction.php?deleted=0";</script>';
     }
 
-    mysqli_query($conn, "DELETE FROM cart WHERE cart_id = '$deleteId'");
-    echo '<script>window.location.href = "sales.php?deleted=1";</script>';
+    // Close the database connection
+    mysqli_close($conn);
 }
-    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -177,7 +169,7 @@ if (isset($_GET['delete_id'])) {
                         <form action="" method="post">
                             <div class="card">
                                 <div class="card-body p-3">
-                                    <h4 class="card-title">Transaction Information</h4>
+                                    <h4 class="card-title">Purchase Transaction Information</h4>
                                     <div class="row">
 
                                         <div class="col-md-6">
@@ -229,7 +221,7 @@ if (isset($_GET['delete_id'])) {
                                                     $date = date('Ymd'); // Format date as YYYYMMDD
                                                     $time = microtime(true) * 10000; // Get the current time with microsecond precision
                                                     $random = rand(100, 999); // Add a random three-digit number
-                                                    $invoice = "SINV" . $date . $random . substr($time, -4); // Append the last 4 digits of the time
+                                                    $invoice = "PINV" . $date . $random . substr($time, -4); // Append the last 4 digits of the time
                                                     ?>
                                                 <input type="text" name="invoice" value="<?php echo $invoice; ?>"
                                                     class="form-control fw-bold">
@@ -293,7 +285,7 @@ if (isset($_GET['delete_id'])) {
                                             <tbody>
                                                 <?php 
                                                 $sr=0;
-													$queryproducts = "SELECT * FROM cart where ip='$ip'";
+													$queryproducts = "SELECT * FROM cartpurchase";
 													$resultproducts = mysqli_query($conn, $queryproducts);
 													while ($dataproducts = mysqli_fetch_assoc($resultproducts)) :  $sr++;?>
                                                 <tr>
@@ -324,7 +316,7 @@ if (isset($_GET['delete_id'])) {
                                                     <td>
                                                         <div class="table-action">
 
-                                                            <a href="transaction.php?delete_id=<?php echo $dataproducts['cart_id']; ?>"
+                                                            <a href="purchase-transaction.php?delete_id=<?php echo $dataproducts['cart_id']; ?>"
                                                                 class="btn btn-sm bg-danger-light"
                                                                 onclick="return confirm('Are you sure you want to delete this item?');">
                                                                 <i class="fas fa-times"></i> Delete
@@ -342,7 +334,7 @@ if (isset($_GET['delete_id'])) {
 
                         <!-- Add to Proceed Button -->
                         <!-- <div class="mt-2 d-flex justify-content-end">
-                                <a href="transaction.php" class="btn btn-success">Add to Proceed</a>
+                                <a href="purchase-transaction.php" class="btn btn-success">Add to Proceed</a>
                             </div> -->
 
 

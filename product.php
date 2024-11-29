@@ -1,5 +1,9 @@
 <?php
 include 'database.php';
+session_start();
+if ($_SESSION["user_id"] == '') {
+    header("Location: index.php");
+}
 ?>
 <?php
 if (isset($_POST['ADD'])) {
@@ -8,9 +12,10 @@ if (isset($_POST['ADD'])) {
 	$date=date('Y-m-d');
 	$name = $_POST['name'];
 	$details = $_POST['details'];
+    $stock = $_POST['stock'];
 	$amount = $_POST['amount'];
 	// Insert the form data into the sales table                            
-	$query = "INSERT INTO products SET date = '$date', name = '$name', details = '$details', catid = '$catid', subCatId = '$subCatId', amount = '$amount'";
+	$query = "INSERT INTO products SET date = '$date', name = '$name', details = '$details', stock = '$stock', catid = '$catid', subCatId = '$subCatId', amount = '$amount'";
 
 	// Execute the query and check for success
 	if (mysqli_query($conn, $query)) {
@@ -20,12 +25,6 @@ if (isset($_POST['ADD'])) {
 	}
 	// Close the database connection
 	mysqli_close($conn);
-}
-?>
-<?php
-session_start();
-if ($_SESSION["user_id"] == '') {
-    header("Location: index.php");
 }
 ?>
 <!DOCTYPE html>
@@ -174,6 +173,7 @@ if ($_SESSION["user_id"] == '') {
                                         });
                                         </script>
 
+
                                         <div class="col-md-6">
                                             <div class="mb-0">
                                                 <label for="date" class="mb-2">Product Name:</label>
@@ -189,6 +189,12 @@ if ($_SESSION["user_id"] == '') {
                                             </div>
                                         </div>
 
+                                        <div class="col-md-6">
+                                            <div class="mb-0">
+                                                <label class="mb-2">Stock:</label>
+                                                <input type="number" name="stock" class="form-control fw-bold">
+                                            </div>
+                                        </div>
 
                                         <div class="col-md-6">
                                             <div class="mb-3">
@@ -241,6 +247,7 @@ if ($_SESSION["user_id"] == '') {
                                                     <th>Serial #</th>
                                                     <th>Product Name</th>
                                                     <th>Product Details</th>
+                                                    <th>Stock</th>
                                                     <th>Amount</th>
                                                     <th>Added Date</th>
                                                     <th>Action</th>
@@ -254,30 +261,30 @@ if ($_SESSION["user_id"] == '') {
 													while ($dataproducts = mysqli_fetch_assoc($resultproducts)) : $srno++; ?>
                                                 <tr>
                                                     <td>
-                                                        <a href="invoice-view.php"><?php echo $srno; ?></a>
+                                                        <?php echo $srno; ?>
                                                     </td>
                                                     <td>
                                                         <h2 class="table-avatar">
-                                                            <a href="patient-profile.php" class="avatar avatar-sm me-2">
+                                                            <a class="avatar avatar-sm me-2">
                                                                 <img class="avatar-img rounded-circle"
                                                                     src="assets/img/patients/patient.jpg"
                                                                     alt="User Image">
                                                             </a>
-                                                            <a href="patient-profile.php"><?php echo $dataproducts['name']; ?>
+                                                            <a><?php echo $dataproducts['name']; ?>
                                                                 <span>#<?php echo $dataproducts['id']; ?></span></a>
                                                         </h2>
                                                     </td>
                                                     <td>
-                                                        <a
-                                                            href="invoice-view.php"><?php echo $dataproducts['details']; ?></a>
+                                                        <?php echo $dataproducts['details']; ?>
                                                     </td>
+                                                    <td><?php echo $dataproducts['stock']; ?></td>
                                                     <td>$<?php echo $dataproducts['amount']; ?></td>
                                                     <td><?php echo $dataproducts['date']; ?></td>
                                                     <td>
                                                         <div class="table-action">
                                                             <a href="sale-report.php?pid=<?php echo $dataproducts['id']; ?>"
                                                                 target="_blank" class="btn btn-sm bg-info-light">
-                                                                <i class="far fa-eye"></i> View
+                                                                <i class="far fa-eye"></i> Sale Report
                                                             </a>
                                                         </div>
 

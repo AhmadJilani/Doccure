@@ -58,10 +58,10 @@ if ($_SESSION["user_id"] == '') {
             $rd_products = mysqli_fetch_object($query_members);            
         ?>
 
-        <div class="content">
+        <div class="content my-5">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-8 offset-lg-2">
+                    <div class="col-lg-10 offset-lg-1">
                         <div class="invoice-content">
                             <div class="invoice-item">
                                 <div class="row">
@@ -96,6 +96,7 @@ if ($_SESSION["user_id"] == '') {
                                                 <thead>
                                                     <tr>
                                                         <th>Description</th>
+                                                        <th>Date</th>
                                                         <th class="text-center">Price</th>
                                                         <th class="text-center">Qty</th>
                                                         <th class="text-center">Total Amount</th>
@@ -130,6 +131,7 @@ if ($_SESSION["user_id"] == '') {
                                                             echo $Cusname = $rd_members->name;
                                                             ?>
                                                         </td>
+                                                        <td><?php echo $dataproducts['doc']; ?></td>
                                                         <td class="text-center">$<?php echo $dataproducts['price']; ?>
                                                         </td>
                                                         <td class="text-center"><?php echo $qty=$dataproducts['qty']; ?>
@@ -150,6 +152,7 @@ if ($_SESSION["user_id"] == '') {
                                                         ?>
                                                     <tr>
                                                         <td class="text-center"><strong>Tota Value</strong></td>
+                                                        <td class="text-center"></td>
                                                         <td class="text-center"></td>
                                                         <td class="text-center"><?php echo $Totalqty; ?></td>
                                                         <td class="text-end"><?php echo $TotaltotalAmnt; ?></td>

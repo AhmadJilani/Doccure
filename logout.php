@@ -1,17 +1,16 @@
 <?php
 session_start(); // Start the session
 
-// Unset all session variables
-session_unset();  
+// Unset specific session variables
+unset($_SESSION['user_id']);
+unset($_SESSION['email']);
+unset($_SESSION['name']);
+
+// Unset all session variables (alternative to unset each)
+session_unset();
 
 // Destroy the session
-session_destroy(); 
-
-// Destroy the session cookie by setting its expiration time to the past
-if (ini_get("session.use_cookies")) {
-    $params = session_get_cookie_params();
-    setcookie(session_name(), '', time() - 42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
-}
+session_destroy();
 
 // Redirect to the index page
 header("Location: index.php");

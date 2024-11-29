@@ -1,6 +1,12 @@
 <?php
 include 'database.php';
-
+$ip = $_SERVER['REMOTE_ADDR'];
+session_start();
+if ($_SESSION["user_id"] == '') {
+    header("Location: index.php");
+}
+?>
+<?php
 if (isset($_POST['submit'])) {
 $fullname = $_POST['name'];                                    
 $cell = $_POST['cell'];
@@ -11,7 +17,7 @@ $company = $_POST['company'];
 $user_type = $_POST['user_type'];
 
 // Insert the form data into the customers table                            
-$query = "INSERT INTO customers SET name = '$fullname', cell = '$cell', email = '$email', address = '$address', city = '$city', company = '$company', user_type = '$user_type'";
+$query = "INSERT INTO customers SET name = '$fullname', cell = '$cell', email = '$email', address = '$address', city = '$city', company = '$company', user_type = '$user_type', userid = '$_SESSION[user_id]'";
 
 // Execute the query and check for success
 if (mysqli_query($conn, $query)) {
@@ -119,68 +125,77 @@ if ($_SESSION["user_id"] == '') {
 
                     }
                     ?>
-                    
-                    <?php if($_GET['addCustomer']==1){ ?>
-                    <form action="customers.php" method="post">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Customer Information</h4>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="mb-2">Name <span class="text-danger">*</span></label>
-                                            <input type="text" name="name" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="mb-2">Cell <span class="text-danger">*</span></label>
-                                            <input type="text" name="cell" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="mb-2">Email <span class="text-danger">*</span></label>
-                                            <input type="email" name="email" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="mb-2">Address <span class="text-danger">*</span></label>
-                                            <input type="text" name="address" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="mb-2">City <span class="text-danger">*</span></label>
-                                            <input type="text" name="city" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="mb-2">Company <span class="text-danger">*</span></label>
-                                            <input type="text" name="company" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label for="user_type">User Type:</label>
-                                            <select name="user_type" required>
-                                                <option value="vendor">Vendor</option>
-                                                <option value="customer">Customer</option>
-                                            </select>
-                                        </div>
-                                    </div>
 
-                                    <div class="mt-2 submit-section submit-btn-bottom">
-                                        <button type="submit" name="submit" class="btn btn-primary prime-btn">Save
-                                            Changes</button>
+                        <?php if($_GET['addCustomer']==1){ ?>
+                        <form action="customers.php" method="post">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Customer Information</h4>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="mb-2">Name <span class="text-danger">*</span></label>
+                                                <input type="text" name="name" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="mb-2">Cell <span class="text-danger">*</span></label>
+                                                <input type="text" name="cell" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="mb-2">Email <span class="text-danger">*</span></label>
+                                                <input type="email" name="email" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="mb-2">Address <span class="text-danger">*</span></label>
+                                                <input type="text" name="address" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="mb-2">City <span class="text-danger">*</span></label>
+                                                <input type="text" name="city" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="mb-2">Company <span class="text-danger">*</span></label>
+                                                <input type="text" name="company" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="user_type" class="mb-2">User Type: <span class="text-danger">*</span></label>
+                                                <select class="form-control" name="user_type" required>
+                                                    <option value="vendor">Vendor</option>
+                                                    <option value="customer">Customer</option>
+                                                </select>
+                                            </div>
+                                        </div> -->
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="user_type" class="mb-2">User Type: <span class="text-danger">*</span></label>
+                                                <select class="form-control" name="user_type" required>
+                                                    <option value="customer">Customer</option>
+                                                    <option value="vendor">Vendor</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2 submit-section submit-btn-bottom">
+                                            <button type="submit" name="submit" class="btn btn-primary prime-btn">Save
+                                                Changes</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
-                    <?php }	?>
+                        </form>
+                        <?php }	?>
 
                         <div class="col-md-7 col-lg-8 col-xl-12">
                             <div class="row">
@@ -188,7 +203,8 @@ if ($_SESSION["user_id"] == '') {
                                     <h3 class="card-title">Customers</h3>
                                     <div class="text-end">
                                         <a title="Add Product" class="btn btn-primary btn-sm" data-bs-toggle="modal"><i
-                                                class="fas fa-plus-circle"></i> <a href="customers.php?addCustomer=1">Add
+                                                class="fas fa-plus-circle"></i> <a
+                                                href="customers.php?addCustomer=1">Add
                                                 Customer</a>
                                     </div>
                                 </div>
@@ -199,29 +215,32 @@ if ($_SESSION["user_id"] == '') {
                                         <table class="table table-hover table-center mb-0">
                                             <thead>
                                                 <tr>
-                                                    <th>Customer ID</th>
+                                                    <th>Sr.</th>
                                                     <th>User Type</th>
                                                     <th>Name</th>
                                                     <th>Cell</th>
                                                     <th>Email</th>
                                                     <th>Address</th>
                                                     <th>City</th>
-                                                    <th>Company</th>
-                                                    <th>Action</th>
+                                                    <th>Company</th>  
+                                                    <th>BCODE</th>                                                  
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php 
+                                                $sr =0;
 													$queryproducts = "SELECT * FROM customers";
 													$resultproducts = mysqli_query($conn, $queryproducts);
-													while ($dataproducts = mysqli_fetch_assoc($resultproducts)) : ?>
+													while ($dataproducts = mysqli_fetch_assoc($resultproducts)) : 
+                                                    $sr++
+                                                    ?>
                                                 <tr>
                                                     <td>
-                                                        <?php echo $catid=$dataproducts['id']; ?>
+                                                        <?php echo $sr; ?>
                                                     </td>
                                                     <td>
                                                         <?php echo $dataproducts['user_type']; ?>
-                                                    </td>                                                    
+                                                    </td>
                                                     <td>
                                                         <h2 class="table-avatar">
                                                             <a href="patient-profile.php" class="avatar avatar-sm me-2">
@@ -248,17 +267,15 @@ if ($_SESSION["user_id"] == '') {
                                                     <td>
                                                         <?php echo $dataproducts['company']; ?>
                                                     </td>
-                                                    <td>
-                                                        <div class="table-action">
-                                                            <a href="invoice-view.php" class="btn btn-sm bg-info-light">
-                                                                <i class="far fa-eye"></i> View
-                                                            </a>
-
-
-                                                        </div>
-
-
-                                                    </td>
+                                                    <?php $userid = $dataproducts['userid'];
+                                                    $query_members = "SELECT * FROM register WHERE id = '$userid'";
+                                                    $result_members = mysqli_query($conn, $query_members);
+                                                    $data_members = mysqli_fetch_object($result_members);
+                                                    $bcode=$data_members->BCODE;
+                                                    ?>
+                                                    <td title=<?php echo $data_members->name; ?>>
+                                                    <?php echo $bcode ; ?>                                                        
+                                                    </td>                          
                                                 </tr>
                                                 <?php endwhile; ?>
 

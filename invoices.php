@@ -136,7 +136,7 @@ if ($_SESSION["user_id"] == '') {
                                                 </td>
                                                 <td>
                                                     <div class="table-action">
-                                                        <a href="invoice-view.php?inv=<?php echo $datainvoice['invNum']; ?>" class="btn btn-sm bg-info-light">
+                                                        <a href="invoice-view.php?inv=<?php echo $datainvoice['invNum']; ?>" target="_blank" class="btn btn-sm bg-info-light">
                                                             <i class="far fa-eye"></i> View
                                                         </a>
                                                         <a href="javascript:void(0);"
